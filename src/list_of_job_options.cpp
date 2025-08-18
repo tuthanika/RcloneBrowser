@@ -74,9 +74,7 @@ QFile *ListOfJobOptions::GetPersistenceFile(QIODevice::OpenModeFlag mode) {
     outputDir = QDir(xdg_config_home + "/rclone-browser");
 #endif
 #endif
-
   } else {
-
     // get data location folder from Qt  - OS dependend
     outputDir = QDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
   }
@@ -84,25 +82,25 @@ QFile *ListOfJobOptions::GetPersistenceFile(QIODevice::OpenModeFlag mode) {
   if (!outputDir.exists()) {
     outputDir.mkpath(".");
   }
-
   QString filePath = outputDir.absoluteFilePath(persistenceFileName);
   QFileInfo fileInfo(filePath);
 
-  // Neu file chua ton tai va dang mo o che do ReadOnly, tao file rong truoc
+  // Neu file chua ton tai va o readonly,tao file
   if (!fileInfo.exists() && mode == QIODevice::ReadOnly) {
     QFile tempFile(filePath);
-    if (!tempFile.open(QIODevice::WriteOnly)) {
+    if (tempFile.open(QIODevice::WriteOnly)) {
+      tempFile.close();
+    } else {
       return nullptr;
     }
-    tempFile.close();
   }
 
   QFile *file = new QFile(filePath);
   if (!file->open(mode)) {
-    //    qDebug() << QString("Could not open ") << file->fileName();
     delete file;
     return nullptr;
   }
+
   return file;
 }
 
