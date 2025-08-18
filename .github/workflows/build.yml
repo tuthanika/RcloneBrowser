@@ -50,28 +50,28 @@ jobs:
           name: windows
           path: build\build\Release\*
           
-#  build_linux:
-#    name: Linux Build
-#    runs-on: ubuntu-latest
-#    
-#    steps:
-#      - uses: actions/checkout@v4
-#      - name: Install Development Tools
-#        run: |
-#          sudo apt update
-#          sudo apt -y install git g++ cmake make qtdeclarative5-dev qtmultimedia5-dev
-#      - name: Build Rclone Browser
-#        run: |
-#          mkdir build
-#          cd build
-#          cmake ..
-#          make -j $(nproc)
-#          
-#      - uses: actions/upload-artifact@v4
-#        with:
-#         name: linux
-#         path: build/build/*
-#         
+  build_linux:
+    name: Linux Build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Development Tools
+        run: |
+          sudo apt update
+          sudo apt -y install git g++ cmake make qtdeclarative5-dev qtmultimedia5-dev
+      - name: Build Rclone Browser
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make -j $(nproc)
+          
+      - uses: actions/upload-artifact@v4
+        with:
+         name: linux
+         path: build/build/*
+         
 #  build_macos:
 #    name: macOS Build
 #    runs-on: macos-latest
@@ -132,11 +132,6 @@ jobs:
       - uses: actions/download-artifact@v5
         with:
           path: /tmp/artifacts
-      - name: Compress artifacts
-        run: |
-          pushd /tmp/artifacts
-          for i in *;do zip -r -0 $i.zip $i;done
-          popd
           
       - name: Get short commit
         run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
