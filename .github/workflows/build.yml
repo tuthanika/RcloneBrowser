@@ -129,7 +129,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Create artifact directory
         run: rm -rf /tmp/artifacts && mkdir /tmp/artifacts
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v5
         with:
           path: /tmp/artifacts
       - name: Compress artifacts
