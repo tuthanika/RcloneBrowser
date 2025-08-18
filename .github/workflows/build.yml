@@ -33,7 +33,7 @@ jobs:
           popd
 
       - name: Setup CMake 3.4.3
-        uses: lukka/get-cmake@v3
+        uses: lukka/get-cmake@latest
         with:
           cmakeVersion: '3.4.3'     
 
