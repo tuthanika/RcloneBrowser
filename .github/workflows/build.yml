@@ -132,6 +132,13 @@ jobs:
       - uses: actions/download-artifact@v5
         with:
           path: /tmp/artifacts
+      - name: Display structure of downloaded files
+        run: ls -R /tmp/artifacts    
+      - name: Compress artifacts
+        run: |
+          pushd /tmp/artifacts
+          for i in *;do zip -r -0 $i.zip $i;done
+          popd
           
       - name: Get short commit
         run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
