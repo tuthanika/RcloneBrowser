@@ -78,20 +78,30 @@ QFile *ListOfJobOptions::GetPersistenceFile(QIODevice::OpenModeFlag mode) {
   } else {
 
     // get data location folder from Qt  - OS dependend
-    outputDir =
-        QDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
+    outputDir = QDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
   }
 
   if (!outputDir.exists()) {
     outputDir.mkpath(".");
   }
-  QString filePath = outputDir.absoluteFilePath(persistenceFileName);
-  QFile *file = new QFile(filePath);
 
+  QString filePath = outputDir.absoluteFilePath(persistenceFileName);
+  QFileInfo fileInfo(filePath);
+
+  // Neu file chua ton tai va dang mo o che do ReadOnly, tao file rong truoc
+  if (!fileInfo.exists() && mode == QIODevice::ReadOnly) {
+    QFile tempFile(filePath);
+    if (!tempFile.open(QIODevice::WriteOnly)) {
+      return nullptr;
+    }
+    tempFile.close();
+  }
+
+  QFile *file = new QFile(filePath);
   if (!file->open(mode)) {
     //    qDebug() << QString("Could not open ") << file->fileName();
     delete file;
-    file = nullptr;
+    return nullptr;
   }
   return file;
 }
