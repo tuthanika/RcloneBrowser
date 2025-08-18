@@ -32,10 +32,10 @@ jobs:
           python qtd windows desktop 5.15.2 win64_msvc2019_64
           popd
 
-      - name: Setup CMake 3.4.3
+      - name: Setup CMake 3.15.0
         uses: lukka/get-cmake@latest
         with:
-          cmakeVersion: '3.4.3'     
+          cmakeVersion: '3.15.0'     
 
       - name: Build Rclone Browser
         run: |
