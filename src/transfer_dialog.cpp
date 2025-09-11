@@ -819,14 +819,6 @@ QString TransferDialog::getMode() const {
   return QString();
 }
 
-QString TransferDialog::getSource() const {
-  if (mIsDownload) {
-    return mRemote + ":" + ui.textSource->text();
-  } else {
-    return ui.textSource->text();
-  }
-}
-
 QString TransferDialog::getDest() const {
   return ui.textDest->text();
 }
