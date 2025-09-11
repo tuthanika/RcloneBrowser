@@ -823,14 +823,6 @@ QString TransferDialog::getDest() const {
   return ui.textDest->text();
 }
 
-QString TransferDialog::getDest() const {
-  if (mIsDownload) {
-    return ui.textDest->text();
-  } else {
-    return mRemote + ":" + ui.textDest->text();
-  }
-}
-
 QStringList TransferDialog::getOptions() {
   JobOptions *jobo = getJobOptions(mJobOptions);
   QStringList newWay = jobo->getOptions();
