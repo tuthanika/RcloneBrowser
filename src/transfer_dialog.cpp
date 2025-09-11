@@ -631,16 +631,16 @@ TransferDialog::TransferDialog(bool isDownload, bool isDrop,
     // when operating on an existing instance i.e. a saved task,
 
     if (isDownload) {
-      ui.l_destRemote->hide();
+      //ui.l_destRemote->hide();
       ui.buttonSourceFile->setVisible(false);
       ui.buttonSourceItems->setVisible(false);
       ui.buttonDefaultSource->hide();
-      ui.l_sourceRemote->setEnabled(false);
+      ui.l_sourceRemote->setEnabled(true);
     } else {
-      ui.l_sourceRemote->hide();
+      //ui.l_sourceRemote->hide();
       ui.buttonDefaultDest->hide();
-      ui.buttonDest->setVisible(false);
-      ui.l_destRemote->setEnabled(false);
+      ui.buttonDest->setVisible(true);
+      ui.l_destRemote->setEnabled(true);
     }
     putJobOptions();
 
@@ -650,8 +650,8 @@ TransferDialog::TransferDialog(bool isDownload, bool isDrop,
     if (isDownload) {
       // download
       ui.buttonDefaultSource->hide();
-      ui.l_destRemote->hide();
-      ui.l_sourceRemote->setEnabled(false);
+      //ui.l_destRemote->hide();
+      ui.l_sourceRemote->setEnabled(true);
 
       ui.l_sourceRemote->setText(
           metrix.elidedText(remote + ":", Qt::ElideMiddle, 150));
@@ -690,8 +690,8 @@ TransferDialog::TransferDialog(bool isDownload, bool isDrop,
 
     } else {
       // upload
-      ui.l_sourceRemote->hide();
-      ui.l_destRemote->setEnabled(false);
+      //ui.l_sourceRemote->hide();
+      ui.l_destRemote->setEnabled(true);
       ui.buttonDefaultDest->hide();
       ui.l_destRemote->setText(
           metrix.elidedText(remote + ":", Qt::ElideMiddle, 150));
