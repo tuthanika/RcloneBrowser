@@ -691,11 +691,8 @@ TransferDialog::TransferDialog(bool isDownload, bool isDrop,
     } else {
       // upload
       ui.l_sourceRemote->hide();
-      ui.l_destRemote->setEnabled(false);
       ui.buttonDefaultDest->hide();
-      ui.l_destRemote->setText(
-          metrix.elidedText(remote + ":", Qt::ElideMiddle, 150));
-      ui.l_destRemote->setToolTip(remote + ":");
+      ui.l_destRemote->hide(); // Hide the remote label
 
       QString folder;
       QString default_folder =
@@ -725,11 +722,11 @@ TransferDialog::TransferDialog(bool isDownload, bool isDrop,
                     ui.textDest->setText(path.path());
                   }
           */
-          ui.textDest->setText(path.path());
+          ui.textDest->setText(remote + ":" + path.path());
 
         } else {
 
-          ui.textDest->setText(path.path());
+          ui.textDest->setText(remote + ":" + path.path());
         }
 
         ui.textSource->setFocus(Qt::FocusReason::OtherFocusReason);
@@ -737,9 +734,9 @@ TransferDialog::TransferDialog(bool isDownload, bool isDrop,
       } else {
         // when dropping to root folder
         if (path.path() == ".") {
-          ui.textDest->setText("");
+          ui.textDest->setText(remote + ":");
         } else {
-          ui.textDest->setText(path.path());
+          ui.textDest->setText(remote + ":" + path.path());
         }
       };
     };
@@ -831,11 +828,7 @@ QString TransferDialog::getSource() const {
 }
 
 QString TransferDialog::getDest() const {
-  if (mIsDownload) {
-    return ui.textDest->text();
-  } else {
-    return mRemote + ":" + ui.textDest->text();
-  }
+  return ui.textDest->text();
 }
 
 QStringList TransferDialog::getOptions() {
@@ -1038,16 +1031,8 @@ void TransferDialog::putJobOptions() {
     ui.textDest->setText(mJobOptions->dest);
   } else {
     ui.textSource->setText(mJobOptions->source);
-
-    ui.l_destRemote->setText(metrix.elidedText(
-        (mJobOptions->dest).left((mJobOptions->dest).indexOf(":") + 1),
-        Qt::ElideMiddle, 150));
-    ui.l_destRemote->setToolTip(
-        (mJobOptions->dest).left((mJobOptions->dest).indexOf(":") + 1));
-
-    ui.textDest->setText((mJobOptions->dest)
-                             .right((mJobOptions->dest).length() -
-                                    (mJobOptions->dest).indexOf(":") - 1));
+    ui.l_destRemote->hide();
+    ui.textDest->setText(mJobOptions->dest);
   }
 
   ui.le_taskName->setText(mJobOptions->description);
