@@ -942,7 +942,7 @@ JobOptions *TransferDialog::getJobOptions(JobOptions *taskOptions) {
     taskOptions->dest = ui.textDest->text();
   } else {
     taskOptions->source = ui.textSource->text();
-    taskOptions->dest = mRemote + ":" + ui.textDest->text();
+    taskOptions->dest = ui.textDest->text();
   }
 
   taskOptions->description = ui.le_taskName->text();
